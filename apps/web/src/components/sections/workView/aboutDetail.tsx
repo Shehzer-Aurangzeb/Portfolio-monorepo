@@ -1,8 +1,7 @@
-import { ABOUT } from "@/content/projects";
-import { CONTACT } from "@/content/contact";
+import { ABOUT } from '@/content/projects';
+import { CONTACT } from '@/content/contact';
 
-const microClass =
-  "font-mono text-micro tracking-micro uppercase text-brand-muted font-medium";
+const microClass = 'font-mono text-micro tracking-micro uppercase text-brand-muted font-medium';
 
 type ContactRowProps = {
   label: string;
@@ -12,15 +11,13 @@ type ContactRowProps = {
 
 function ContactRow({ label, value, href }: ContactRowProps) {
   const baseRow =
-    "grid grid-cols-[72px_1fr_auto] items-center gap-4 py-3 border-b border-brand-rule transition-[padding-left] duration-[280ms] ease-(--ease-paper)";
+    'grid grid-cols-[72px_1fr_auto] items-center gap-4 py-3 border-b border-brand-rule transition-[padding-left] duration-[280ms] ease-(--ease-paper)';
 
   if (!href) {
     return (
       <div className={`${baseRow} cursor-default`}>
         <span className={microClass}>{label}</span>
-        <span className="text-[13.5px] text-brand-ink tracking-body font-mono">
-          {value}
-        </span>
+        <span className="text-[13.5px] text-brand-ink tracking-body font-mono">{value}</span>
         <span aria-hidden />
       </div>
     );
@@ -29,14 +26,12 @@ function ContactRow({ label, value, href }: ContactRowProps) {
   return (
     <a
       href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noreferrer" : undefined}
+      target={href.startsWith('http') ? '_blank' : undefined}
+      rel={href.startsWith('http') ? 'noreferrer' : undefined}
       className={`${baseRow} hover:pl-2`}
     >
       <span className={microClass}>{label}</span>
-      <span className="text-[13.5px] text-brand-ink tracking-body font-mono">
-        {value}
-      </span>
+      <span className="text-[13.5px] text-brand-ink tracking-body font-mono">{value}</span>
       <span className="text-[13px] text-brand-muted font-mono">↗</span>
     </a>
   );
@@ -65,7 +60,7 @@ export default function AboutDetail() {
         </p>
 
         <div className="grid grid-cols-[60px_1fr] gap-4 items-start pt-2.5 border-t border-brand-rule">
-          <span className={microClass + " pt-1"}>Tech</span>
+          <span className={microClass + ' pt-1'}>Tech</span>
           <ul className="flex flex-wrap gap-x-2 gap-y-1.5 p-0 m-0 list-none">
             {ABOUT.stack.map((s) => (
               <li
@@ -78,27 +73,29 @@ export default function AboutDetail() {
           </ul>
         </div>
 
+        <div className="grid grid-cols-[60px_1fr] gap-4 items-start pt-2.5 border-t border-brand-rule">
+          <span className={microClass + ' pt-1'}>Tooling</span>
+          <ul className="flex flex-wrap gap-x-2 gap-y-1.5 p-0 m-0 list-none">
+            {ABOUT.tooling.map((t) => (
+              <li
+                key={t}
+                className="font-mono text-[11px] py-1 px-2.5 border border-brand-rule rounded-full text-brand-ink-soft tracking-[0.02em] bg-transparent"
+              >
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div className="grid gap-0 pt-2.5 border-t border-brand-rule">
-          <ContactRow
-            label="Email"
-            value={CONTACT.email}
-            href={`mailto:${CONTACT.email}`}
-          />
+          <ContactRow label="Email" value={CONTACT.email} href={`mailto:${CONTACT.email}`} />
           <ContactRow
             label="Phone"
             value={CONTACT.phone}
-            href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}
+            href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}
           />
-          <ContactRow
-            label="GitHub"
-            value={CONTACT.githubLabel}
-            href={CONTACT.github}
-          />
-          <ContactRow
-            label="LinkedIn"
-            value={CONTACT.linkedinLabel}
-            href={CONTACT.linkedin}
-          />
+          <ContactRow label="GitHub" value={CONTACT.githubLabel} href={CONTACT.github} />
+          <ContactRow label="LinkedIn" value={CONTACT.linkedinLabel} href={CONTACT.linkedin} />
           <ContactRow label="Based" value={CONTACT.location} />
         </div>
       </div>
