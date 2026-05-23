@@ -1,0 +1,48 @@
+{
+  "name": "Portfolio-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:web": "pnpm --filter web dev",
+    "dev:studio": "pnpm --filter studio dev",
+    "dev": "pnpm --parallel dev:web dev:studio",
+    "build:web": "pnpm --filter web build",
+    "build:studio": "pnpm --filter studio build",
+    "prepare": "husky",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
+  "lint-staged": {
+  "**/*.{ts,tsx}": [
+    "eslint --fix",
+    "prettier --write"
+  ],
+  "**/*.{json,md,yaml,yml}": [
+    "prettier --write"
+  ]
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.59.4",
+    "@typescript-eslint/parser": "^8.59.4",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
+    "prettier": "^3.8.3"
+  }
+}
