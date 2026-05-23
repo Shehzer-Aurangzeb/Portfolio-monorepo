@@ -1,9 +1,8 @@
-import type { Project } from "@/content/projects";
+import type { Project } from '@/sanity/types';
 
-import ProjectCarousel from "@/components/sections/workView/projectCarousel";
+import ProjectCarousel from '@/components/sections/workView/projectCarousel';
 
-const microClass =
-  "font-mono text-micro tracking-micro uppercase text-brand-muted font-medium";
+const microClass = 'font-mono text-micro tracking-micro uppercase text-brand-muted font-medium';
 
 export type ProjectDetailProps = {
   p: Project;
@@ -28,16 +27,16 @@ export default function ProjectDetail({ p }: ProjectDetailProps) {
           {p.title}
         </h2>
 
-        <p className="font-serif italic text-brand-ink-soft tracking-body leading-[1.4] max-w-[50ch] text-[16px] md:text-[clamp(15px,1.1vw,18px)]">
+        <p className="font-serif italic text-brand-ink-soft tracking-body leading-[1.4] text-[16px] md:text-[clamp(15px,1.1vw,18px)]">
           <em className="italic">{p.blurb}</em>
         </p>
 
-        <p className="font-sans text-brand-muted leading-[1.55] max-w-[56ch] text-pretty text-[14px] md:text-body-sm tracking-[-0.003em]">
+        <p className="font-sans text-brand-muted leading-[1.55] text-pretty text-[14px] md:text-body-sm tracking-[-0.003em]">
           {p.body}
         </p>
 
         <div className="grid grid-cols-[60px_1fr] gap-4 items-start pt-2.5 border-t border-brand-rule">
-          <span className={microClass + " pt-1"}>Stack</span>
+          <span className={microClass + ' pt-1'}>Stack</span>
           <ul className="flex flex-wrap gap-x-2 gap-y-1.5 p-0 m-0 list-none">
             {p.stack.map((s) => (
               <li
@@ -53,9 +52,7 @@ export default function ProjectDetail({ p }: ProjectDetailProps) {
         <div className="flex justify-between items-center pt-3.5 border-t border-brand-rule">
           <div className="flex flex-col gap-1">
             <span className={microClass}>Role</span>
-            <span className="text-[13px] text-brand-ink-soft tracking-[0.04em]">
-              {p.role}
-            </span>
+            <span className="text-[13px] text-brand-ink-soft tracking-[0.04em]">{p.role}</span>
           </div>
           {href && p.url ? (
             <a

@@ -1,17 +1,22 @@
-"use client";
+'use client';
 
-import { findItem, isAbout } from "@/content/projects";
-import { menuActions, useMenu } from "@/lib/useMenu";
+import { menuActions, useMenu } from '@/lib/useMenu';
+import { isAbout } from '@/sanity/types';
+import type { Contact, IndexItem } from '@/sanity/types';
 
-import AboutDetail from "@/components/sections/workView/aboutDetail";
-import ProjectDetail from "@/components/sections/workView/projectDetail";
+import AboutDetail from '@/components/sections/workView/aboutDetail';
+import ProjectDetail from '@/components/sections/workView/projectDetail';
 
-const microClass =
-  "font-mono text-micro tracking-micro uppercase text-brand-muted font-medium";
+export type MobileDetailProps = {
+  items: IndexItem[];
+  contact: Contact | null;
+};
 
-export default function MobileDetail() {
+const microClass = 'font-mono text-micro tracking-micro uppercase text-brand-muted font-medium';
+
+export default function MobileDetail({ items, contact }: MobileDetailProps) {
   const { mobileOpen } = useMenu();
-  const item = findItem(mobileOpen);
+  const item = items.find((i) => i.id === mobileOpen) ?? null;
   const open = item !== null;
 
   return (
@@ -30,17 +35,21 @@ export default function MobileDetail() {
           <span aria-hidden="true" className="font-mono text-[16px] leading-none">
             ←
           </span>
-          <span className={microClass + " text-brand-ink"}>Back</span>
+          <span className={microClass + ' text-brand-ink'}>Back</span>
         </button>
-        <span className={microClass}>{item ? item.n : ""}</span>
+        <span className={microClass}>{item ? item.n : ''}</span>
       </div>
 
       <div
-        key={item ? item.id : "none"}
+        key={item ? item.id : 'none'}
         className="flex-1 overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch] px-6 pt-7 pb-14 animate-detail-reveal"
       >
         {item &&
-          (isAbout(item) ? <AboutDetail /> : <ProjectDetail p={item} />)}
+          (isAbout(item) ? (
+            <AboutDetail about={item} contact={contact} />
+          ) : (
+            <ProjectDetail p={item} />
+          ))}
       </div>
     </div>
   );

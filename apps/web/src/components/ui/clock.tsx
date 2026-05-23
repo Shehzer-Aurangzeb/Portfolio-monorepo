@@ -1,10 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { HEADER_CONTENT } from "@/content/header";
+import { HEADER_CONTENT } from '@/content/header';
 
-export default function Clock() {
+export type ClockProps = {
+  label: string | null;
+};
+
+export default function Clock({ label }: ClockProps) {
   // Render nothing until after mount — avoids SSR/CSR time mismatch
   const [now, setNow] = useState<Date | null>(null);
 
@@ -19,6 +23,7 @@ export default function Clock() {
   }, []);
 
   const { location } = HEADER_CONTENT;
+  const displayLabel = (label ?? location.label).toUpperCase();
 
   const fmt = (opts: Intl.DateTimeFormatOptions) =>
     now
@@ -26,34 +31,34 @@ export default function Clock() {
           timeZone: location.timezone,
           ...opts,
         })
-      : "";
+      : '';
 
   const time = fmt({
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
     hour12: false,
   });
-  const date = fmt({ weekday: "short", day: "2-digit", month: "short" })
+  const date = fmt({ weekday: 'short', day: '2-digit', month: 'short' })
     .toUpperCase()
-    .replace(/,/g, "");
+    .replace(/,/g, '');
 
   return (
     <div
       className="justify-self-center inline-flex max-md:flex-col items-center gap-2.5 max-md:gap-0 max-md:leading-tight whitespace-nowrap font-mono text-micro max-md:text-[9px] uppercase tracking-[0.16em] max-md:tracking-[0.12em] font-medium text-brand-muted"
       aria-label={time ? `Local time in Montréal: ${time}` : undefined}
     >
-      <span className="max-md:hidden">{location.label}</span>
+      <span className="max-md:hidden">{displayLabel}</span>
       <span aria-hidden className="opacity-50 max-md:hidden">
         ·
       </span>
       <span className="text-mono-xs max-md:text-[10px] tabular-nums tracking-[0.02em] text-brand-ink-soft">
-        {time || "--:--:--"}
+        {time || '--:--:--'}
       </span>
       <span aria-hidden className="opacity-50 max-md:hidden">
         ·
       </span>
-      <span>{date || "———"}</span>
+      <span>{date || '———'}</span>
     </div>
   );
 }

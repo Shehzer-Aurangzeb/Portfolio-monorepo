@@ -1,17 +1,22 @@
-"use client";
+'use client';
 
-import { useMenu } from "@/lib/useMenu";
-import { findItem, isAbout } from "@/content/projects";
+import { useMenu } from '@/lib/useMenu';
+import { isAbout } from '@/sanity/types';
+import type { Contact, IndexItem } from '@/sanity/types';
 
-import AboutDetail from "@/components/sections/workView/aboutDetail";
-import ProjectDetail from "@/components/sections/workView/projectDetail";
+import AboutDetail from '@/components/sections/workView/aboutDetail';
+import ProjectDetail from '@/components/sections/workView/projectDetail';
 
-const microClass =
-  "font-mono text-micro tracking-micro uppercase text-brand-muted font-medium";
+export type DetailPaneProps = {
+  items: IndexItem[];
+  contact: Contact | null;
+};
 
-export default function DetailPane() {
+const microClass = 'font-mono text-micro tracking-micro uppercase text-brand-muted font-medium';
+
+export default function DetailPane({ items, contact }: DetailPaneProps) {
   const { open, active } = useMenu();
-  const item = findItem(active);
+  const item = items.find((i) => i.id === active) ?? null;
 
   return (
     <div
@@ -20,11 +25,12 @@ export default function DetailPane() {
     >
       <div className="absolute inset-0 px-14 pl-12 pt-10 pb-8 flex items-stretch overflow-y-auto overflow-x-hidden [scrollbar-width:thin]">
         {item ? (
-          <div
-            key={item.id}
-            className="w-full animate-detail-reveal"
-          >
-            {isAbout(item) ? <AboutDetail /> : <ProjectDetail p={item} />}
+          <div key={item.id} className="w-full animate-detail-reveal">
+            {isAbout(item) ? (
+              <AboutDetail about={item} contact={contact} />
+            ) : (
+              <ProjectDetail p={item} />
+            )}
           </div>
         ) : (
           <div className="m-auto">

@@ -1,12 +1,16 @@
-"use client";
+'use client';
 
-import HeroFoot from "@/components/sections/hero/heroFoot";
-import { useMenu } from "@/lib/useMenu";
+import HeroFoot from '@/components/sections/hero/heroFoot';
+import { useMenu } from '@/lib/useMenu';
+import type { Contact } from '@/sanity/types';
 
-const microClass =
-  "font-mono text-micro tracking-micro uppercase text-brand-muted font-medium";
+export type HeroProps = {
+  contact: Contact | null;
+};
 
-export default function Hero() {
+const microClass = 'font-mono text-micro tracking-micro uppercase text-brand-muted font-medium';
+
+export default function Hero({ contact }: HeroProps) {
   const { open } = useMenu();
 
   return (
@@ -24,13 +28,8 @@ export default function Hero() {
       <div className="grid grid-cols-[1.05fr_1fr] items-center gap-16 py-4 max-md:grid-cols-1 max-md:gap-8">
         <div className="flex flex-col gap-[22px]">
           <div className="inline-flex items-center gap-3.5 text-brand-muted">
-            <span
-              aria-hidden="true"
-              className="inline-block w-9 h-px bg-current opacity-50"
-            />
-            <span className={microClass + " text-current"}>
-              Software Engineer · Fullstack
-            </span>
+            <span aria-hidden="true" className="inline-block w-9 h-px bg-current opacity-50" />
+            <span className={microClass + ' text-current'}>Software Engineer · Fullstack</span>
           </div>
 
           <h1
@@ -47,15 +46,13 @@ export default function Hero() {
         <div className="grid grid-rows-[auto_auto] gap-[22px] self-end pb-[18px] max-w-[520px] max-md:pb-0 max-md:max-w-none">
           <span aria-hidden="true" className="block w-16 h-px bg-brand-ink" />
           <p className="font-sans text-brand-ink-soft tracking-body leading-[1.55] max-w-[44ch] text-pretty text-[clamp(14px,1.1vw,17px)]">
-            Fullstack engineer based in{" "}
-            <em className="font-serif text-brand-ink">Montréal</em>. I build
-            production web and mobile apps, with a focus on real-time, AI-driven
-            interfaces.
+            Fullstack engineer based in <em className="font-serif text-brand-ink">Montréal</em>. I
+            build production web and mobile apps, with a focus on real-time, AI-driven interfaces.
           </p>
         </div>
       </div>
 
-      <HeroFoot />
+      <HeroFoot contact={contact} />
     </section>
   );
 }
