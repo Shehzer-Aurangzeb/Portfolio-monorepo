@@ -94,13 +94,13 @@ export default function AboutDetail({ about, contact }: AboutDetailProps) {
         {contact ? (
           <div className="grid gap-0 pt-2.5 border-t border-brand-rule">
             <ContactRow label="Email" value={contact.email} href={`mailto:${contact.email}`} />
-            {contact.phone ? (
+            {/* {contact.phone ? (
               <ContactRow
                 label="Phone"
                 value={contact.phone}
                 href={`tel:${contact.phone.replace(/\s/g, '')}`}
               />
-            ) : null}
+            ) : null} */}
             {contact.github && contact.githubLabel ? (
               <ContactRow label="GitHub" value={contact.githubLabel} href={contact.github} />
             ) : null}
