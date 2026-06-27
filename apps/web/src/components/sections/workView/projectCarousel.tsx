@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 import { urlFor } from '@/sanity/image';
 import type { Project } from '@/sanity/types';
@@ -29,7 +30,7 @@ export default function ProjectCarousel({ p }: ProjectCarouselProps) {
         className={`group/carousel relative overflow-hidden border border-brand-rule bg-brand-bg ${
           isPortrait
             ? 'mx-auto h-[min(78vh,820px)] aspect-[9/19.5] flex-none'
-            : 'aspect-[4/3] flex-none md:aspect-auto md:flex-1 md:min-h-0'
+            : 'mx-auto w-full aspect-[1492/809] flex-none'
         }`}
       >
         <div
@@ -39,11 +40,17 @@ export default function ProjectCarousel({ p }: ProjectCarouselProps) {
           {hasImages
             ? p.images.map((img, i) => (
                 <div key={`${p.id}-${i}`} className="flex-none w-full h-full relative">
-                  <img
+                  <Image
                     src={urlFor(img.src).width(1600).fit('max').auto('format').url()}
                     alt={img.alt ?? `${p.title} — image ${i + 1}`}
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                    className="absolute inset-0 w-full h-full object-contain"
+                    fill
+                    sizes={
+                      isPortrait
+                        ? '(min-width: 768px) 40vw, 80vw'
+                        : '(min-width: 768px) 70vw, 100vw'
+                    }
+                    priority={i === 0}
+                    className="object-contain"
                   />
                 </div>
               ))
