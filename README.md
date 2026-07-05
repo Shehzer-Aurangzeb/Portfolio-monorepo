@@ -1,1 +1,1 @@
-Hi this is my portfolio monorepo. i kept the repo public incase anyone wants to create a similar one.
+Portfolio monorepo for shehzaraurangzeb.com. Built with Next.js and Sanity CMS. Feel free to use it as a reference if you're building something similar
