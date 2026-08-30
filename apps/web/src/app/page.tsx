@@ -1,18 +1,21 @@
-import Header from '@/components/sections/header/header';
-import Hero from '@/components/sections/hero/hero';
-import WorkView from '@/components/sections/workView/workView';
-import { fetchSiteData } from '@/sanity/fetch';
+import Header from '@/components/layout/header';
+import Footer from '@/components/layout/footer';
+import Hero from '@/components/sections/hero';
+import Skills from '@/components/sections/skills';
+import LookingFor from '@/components/sections/lookingFor';
+import Projects from '@/components/sections/projects/projects';
 
-export default async function Home() {
-  const { projects, about, contact } = await fetchSiteData();
-
+export default function Home() {
   return (
-    <div className="flex flex-col h-full">
-      <Header projectCount={projects.length} clockLabel={contact?.location ?? null} />
-      <main className="flex-1 relative">
-        <Hero contact={contact} />
-        <WorkView projects={projects} about={about} contact={contact} />
+    <div className="flex flex-col min-h-full">
+      <Header />
+      <main className="flex-1">
+        <Hero />
+        <Skills />
+        <LookingFor />
+        <Projects />
       </main>
+      <Footer />
     </div>
   );
 }

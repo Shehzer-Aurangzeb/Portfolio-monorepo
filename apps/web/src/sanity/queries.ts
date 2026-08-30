@@ -11,6 +11,7 @@ export const projectsQuery = groq`
     blurb,
     body,
     stack,
+    "imageLayout": coalesce(imageLayout, "carousel"),
     "url": coalesce(url, null),
     "href": coalesce(href, null),
     "images": coalesce(images[]{
@@ -46,5 +47,17 @@ export const contactQuery = groq`
     "linkedinHandle": coalesce(linkedinHandle, null),
     "location": coalesce(location, null),
     "availability": coalesce(availability, null)
+  }
+`;
+
+export const skillsQuery = groq`
+  *[_type == "skill"] | order(orderRank asc) {
+    "id": _id,
+    category,
+    "skills": coalesce(skills[]{
+      name,
+      "icon": coalesce(icon, null),
+      "color": coalesce(color, null)
+    }, [])
   }
 `;

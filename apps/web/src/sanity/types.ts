@@ -15,6 +15,7 @@ export type Project = {
   blurb: string;
   body: string;
   stack: string[];
+  imageLayout: 'carousel' | 'mobile-grid';
   url: string | null;
   href: string | null;
   images: ProjectImage[];
@@ -56,3 +57,15 @@ export type SiteData = {
 export function isAbout(item: IndexItem): item is About {
   return item.id === 'about';
 }
+
+export type Skill = {
+  name: string;
+  icon: string | null;
+  color: string | null;
+};
+
+export type SkillCategory = {
+  id: string;
+  category: string;
+  skills: Skill[];
+};

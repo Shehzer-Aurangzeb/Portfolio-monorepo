@@ -5,3 +5,7 @@ node_modules
 .env*.local
 dist
 .turbo
+tmp
+*.log
+.playwright-mcp
+.DS_Store

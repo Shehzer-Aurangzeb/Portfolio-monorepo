@@ -1,6 +1,6 @@
 import { sanityClient } from '@/sanity/client';
-import { aboutQuery, contactQuery, projectsQuery } from '@/sanity/queries';
-import type { About, Contact, Project, SiteData } from '@/sanity/types';
+import { aboutQuery, contactQuery, projectsQuery, skillsQuery } from '@/sanity/queries';
+import type { About, Contact, Project, SiteData, SkillCategory } from '@/sanity/types';
 
 const REVALIDATE_SECONDS = 60;
 
@@ -18,6 +18,10 @@ export async function fetchAbout(): Promise<About | null> {
 
 export async function fetchContact(): Promise<Contact | null> {
   return sanityClient.fetch<Contact | null>(contactQuery, {}, fetchOptions);
+}
+
+export async function fetchSkills(): Promise<SkillCategory[]> {
+  return sanityClient.fetch<SkillCategory[]>(skillsQuery, {}, fetchOptions);
 }
 
 export async function fetchSiteData(): Promise<SiteData> {

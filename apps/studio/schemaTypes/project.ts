@@ -86,6 +86,21 @@ export default defineType({
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
+      name: 'imageLayout',
+      title: 'Image Layout',
+      type: 'string',
+      description:
+        'How images are displayed. "carousel" for web projects (16:9 slides), "mobile-grid" for mobile apps (3 phone screens per slide).',
+      options: {
+        list: [
+          {title: 'Carousel (web)', value: 'carousel'},
+          {title: 'Mobile Grid (3 phones)', value: 'mobile-grid'},
+        ],
+      },
+      initialValue: 'carousel',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'url',
       title: 'URL label',
       type: 'string',
