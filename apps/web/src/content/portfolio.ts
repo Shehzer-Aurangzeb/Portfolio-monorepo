@@ -30,7 +30,7 @@ export const header = {
   name: 'Shehzar Aurangzeb',
   nav: [
     { label: 'Projects', href: '#projects' },
-    { label: 'CV', href: '/cv.pdf' },
+    { label: 'CV', href: '/ShehzarAurangzeb.pdf' },
   ],
   status: 'Open to work',
   cta: { label: 'Email me', href: 'mailto:shehzerabbasi621@gmail.com' },
