@@ -16,7 +16,10 @@ export const projectsQuery = groq`
     "href": coalesce(href, null),
     "images": coalesce(images[]{
       "src": asset,
-      "alt": coalesce(alt, null)
+      "alt": coalesce(alt, null),
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height,
+      "lqip": asset->metadata.lqip
     }, [])
   }
 `;

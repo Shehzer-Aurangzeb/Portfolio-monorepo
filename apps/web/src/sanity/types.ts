@@ -3,6 +3,9 @@ import type { SanityImageSource } from '@sanity/image-url';
 export type ProjectImage = {
   src: SanityImageSource;
   alt: string | null;
+  width: number | null;
+  height: number | null;
+  lqip: string | null;
 };
 
 export type Project = {

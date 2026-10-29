@@ -10,6 +10,20 @@ type ProjectCardProps = {
   index: number;
 };
 
+function ImageBackdrop({ lqip }: { lqip: string | null }) {
+  if (!lqip) return null;
+
+  return (
+    <div aria-hidden className="absolute inset-0 overflow-hidden">
+      <div
+        className="absolute -inset-[10%] bg-cover bg-center blur-2xl scale-110 opacity-95"
+        style={{ backgroundImage: `url(${lqip})` }}
+      />
+      <div className="absolute inset-0 bg-linear-to-b from-bg/15 via-transparent to-bg/20" />
+    </div>
+  );
+}
+
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const projectNumber = String(index + 1).padStart(2, '0');
@@ -38,12 +52,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {project.images.map((img, i) => (
-                  <div key={i} className="flex-[0_0_100%] relative aspect-video bg-[#1E1D1B]">
+                  <div key={i} className="flex-[0_0_100%] relative overflow-hidden bg-[#1E1D1B]">
+                    <ImageBackdrop lqip={img.lqip} />
                     <Image
-                      src={urlFor(img.src).width(1760).height(990).quality(90).url()}
+                      src={urlFor(img.src).width(1760).quality(90).url()}
                       alt={img.alt || `${project.title} screenshot ${i + 1}`}
-                      fill
-                      className="object-contain"
+                      width={img.width ?? 1760}
+                      height={img.height ?? 990}
+                      className="relative w-full h-auto"
                       unoptimized
                     />
                   </div>
@@ -82,18 +98,20 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 {Array.from({ length: totalSlides }).map((_, slideIndex) => (
                   <div
                     key={slideIndex}
-                    className="flex-[0_0_100%] grid grid-cols-3 gap-[10px] p-px"
+                    className="flex-[0_0_100%] grid grid-cols-3 items-start gap-[10px] p-px"
                   >
                     {project.images.slice(slideIndex * 3, slideIndex * 3 + 3).map((img, i) => (
                       <div
                         key={i}
-                        className="relative aspect-[9/18] bg-[#1E1D1B] border border-border"
+                        className="relative overflow-hidden bg-[#1E1D1B] border border-border"
                       >
+                        <ImageBackdrop lqip={img.lqip} />
                         <Image
-                          src={urlFor(img.src).width(560).height(1120).quality(90).url()}
+                          src={urlFor(img.src).width(560).quality(90).url()}
                           alt={img.alt || `${project.title} screenshot ${slideIndex * 3 + i + 1}`}
-                          fill
-                          className="object-contain"
+                          width={img.width ?? 560}
+                          height={img.height ?? 1120}
+                          className="relative w-full h-auto"
                           unoptimized
                         />
                       </div>
