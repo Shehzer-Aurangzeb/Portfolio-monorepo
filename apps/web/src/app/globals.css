@@ -6,7 +6,9 @@
   --color-text-primary: #F2F0EC;
   --color-text-secondary: #DCDAD5;
   --color-text-muted: #9C9A94;
-  --color-text-dim: #7C7A75;
+  --color-text-dim: #8A8883;
+  --color-text-body: #BCBAB4;
+  --color-surface: #1E1D1B;
   --color-border: rgba(220, 218, 213, 0.14);
   --color-border-strong: rgba(220, 218, 213, 0.16);
   --color-border-weak: rgba(220, 218, 213, 0.12);
@@ -46,6 +48,7 @@
   --radius-none: 0;
   --radius-sm: 2px;
   --radius-full: 9999px;
+  --radius-card: 12px;
 
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -60,11 +63,34 @@
   100% { box-shadow: 0 0 0 0 rgba(110, 158, 124, 0); }
 }
 
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
 @layer base {
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+  }
+
+  html {
+    /* clears the 56px sticky header when jumping to #anchors */
+    scroll-padding-top: 4.5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-text-primary);
+    outline-offset: 3px;
   }
 
   html,
@@ -102,5 +128,34 @@
     font: inherit;
     cursor: pointer;
     padding: 0;
+  }
+}
+
+@layer components {
+  /* progressive enhancement: scroll-driven reveal only where supported and motion is welcome */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal {
+        animation: reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 35%;
+      }
+    }
+
+    :root {
+      interpolate-size: allow-keywords;
+    }
+
+    .disclosure::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition:
+        block-size 320ms var(--ease-default),
+        content-visibility 320ms allow-discrete;
+    }
+
+    .disclosure[open]::details-content {
+      block-size: auto;
+    }
   }
 }

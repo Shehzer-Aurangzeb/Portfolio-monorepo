@@ -1,21 +1,23 @@
-import { footer } from '@/content/portfolio';
+import { contact, header } from '@/content/portfolio';
+
+import Container from '@/components/ui/container';
 
 export default function Footer() {
   return (
-    <footer className="mt-24 pb-12">
-      <div className="mx-auto max-w-(--max-width) px-(--gutter) max-md:px-(--gutter-mobile)">
-        <div className="pt-8 border-t border-border">
-          <div className="flex items-center justify-between text-[12.5px] text-text-muted">
-            <span>{footer.location}</span>
-            <a
-              href={`mailto:${footer.email}`}
-              className="hover:text-text-secondary transition-colors"
-            >
-              {footer.email}
-            </a>
-          </div>
+    <footer className="pb-10">
+      <Container>
+        <div className="flex items-center justify-between gap-4 pt-6 border-t border-border font-mono text-[12px] text-text-dim">
+          <span>
+            © {new Date().getFullYear()} {header.name} · {contact.location}
+          </span>
+          <a
+            href="#top"
+            className="inline-flex items-center h-11 hover:text-text-secondary transition-colors"
+          >
+            Back to top ↑
+          </a>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

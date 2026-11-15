@@ -24,35 +24,6 @@ export const projectsQuery = groq`
   }
 `;
 
-export const aboutQuery = groq`
-  *[_type == "about"][0] {
-    "id": "about",
-    n,
-    title,
-    category,
-    year,
-    body,
-    body2,
-    stack,
-    "tooling": coalesce(tooling, [])
-  }
-`;
-
-export const contactQuery = groq`
-  *[_type == "contact"][0] {
-    email,
-    "phone": coalesce(phone, null),
-    "github": coalesce(github, null),
-    "githubLabel": coalesce(githubLabel, null),
-    "githubHandle": coalesce(githubHandle, null),
-    "linkedin": coalesce(linkedin, null),
-    "linkedinLabel": coalesce(linkedinLabel, null),
-    "linkedinHandle": coalesce(linkedinHandle, null),
-    "location": coalesce(location, null),
-    "availability": coalesce(availability, null)
-  }
-`;
-
 export const skillsQuery = groq`
   *[_type == "skill"] | order(orderRank asc) {
     "id": _id,

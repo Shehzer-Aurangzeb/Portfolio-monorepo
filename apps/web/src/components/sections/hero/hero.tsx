@@ -1,58 +1,46 @@
-'use client';
+import { contact, hero } from '@/content/portfolio';
 
-import HeroFoot from '@/components/sections/hero/heroFoot';
-import { useMenu } from '@/lib/useMenu';
-import type { Contact } from '@/sanity/types';
+import Container from '@/components/ui/container';
+import PillLink from '@/components/ui/pillLink';
 
-export type HeroProps = {
-  contact: Contact | null;
-};
-
-const microClass = 'font-mono text-micro tracking-micro uppercase text-brand-muted font-medium';
-
-export default function Hero({ contact }: HeroProps) {
-  const { open } = useMenu();
-
+export default function Hero() {
   return (
-    <section
-      aria-labelledby="hero-title"
-      aria-hidden={open}
-      data-open={open}
-      className="absolute inset-0 grid grid-rows-[auto_1fr_auto] px-14 pt-10 pb-8 max-md:px-7 max-md:pt-7 max-md:pb-6 transition-opacity ease-(--ease-paper) data-[open=true]:opacity-0 data-[open=true]:pointer-events-none data-[open=true]:duration-[240ms] data-[open=false]:duration-[480ms]"
-    >
-      <div className="flex justify-between items-center pb-6">
-        <span className={microClass}>Portfolio · MMXXVI</span>
-        <span className={microClass}>Montréal, Canada</span>
-      </div>
+    <section className="pt-14 pb-12 max-md:pt-10">
+      <Container>
+        <p className="inline-flex items-center gap-2 h-7 px-3 mb-7 rounded-full border border-border text-[12.5px] text-text-muted">
+          <span className="relative flex size-1.5">
+            <span className="motion-safe:animate-[pulse-dot_2s_ease-in-out_infinite] absolute inset-0 rounded-full bg-accent" />
+            <span className="relative size-1.5 rounded-full bg-accent" />
+          </span>
+          <span className="text-accent">{hero.status}</span>
+          <span aria-hidden>·</span>
+          {hero.availability}
+        </p>
 
-      <div className="grid grid-cols-[1.05fr_1fr] items-center gap-16 py-4 max-md:grid-cols-1 max-md:gap-8">
-        <div className="flex flex-col gap-[22px]">
-          <div className="inline-flex items-center gap-3.5 text-brand-muted">
-            <span aria-hidden="true" className="inline-block w-9 h-px bg-current opacity-50" />
-            <span className={microClass + ' text-current'}>Software Engineer · Fullstack</span>
-          </div>
+        <h1 className="text-[22px] font-medium text-text-primary leading-tight tracking-normal">
+          {hero.name}
+        </h1>
+        <p className="text-[14.5px] text-text-muted mb-5">{hero.tagline}</p>
 
-          <h1
-            id="hero-title"
-            className="font-serif text-brand-ink leading-[0.92] tracking-tight text-[clamp(64px,10.2vw,168px)] max-sm:text-[clamp(54px,14vw,96px)]"
-          >
-            <span className="block">Shehzar</span>
-            <span className="block italic -mt-2 pl-[0.18em]">
-              <em className="italic">Aurangzeb.</em>
-            </span>
-          </h1>
+        <p className="text-[clamp(22px,3.2vw,28px)] font-semibold text-text-primary leading-[1.35] tracking-tight text-balance max-w-[720px] mb-5">
+          {hero.headline}
+        </p>
+
+        <p className="text-[14.5px] text-text-body leading-body max-w-[640px] text-pretty mb-8">
+          {hero.bio}
+        </p>
+
+        <div className="flex flex-wrap items-center gap-2.5">
+          <PillLink href={`mailto:${contact.email}`} variant="solid">
+            Email me
+          </PillLink>
+          {contact.links.map((link) => (
+            <PillLink key={link.label} href={link.href}>
+              {link.label}
+            </PillLink>
+          ))}
         </div>
-
-        <div className="grid grid-rows-[auto_auto] gap-[22px] self-end pb-[18px] max-w-[520px] max-md:pb-0 max-md:max-w-none">
-          <span aria-hidden="true" className="block w-16 h-px bg-brand-ink" />
-          <p className="font-sans text-brand-ink-soft tracking-body leading-[1.55] max-w-[44ch] text-pretty text-[clamp(14px,1.1vw,17px)]">
-            Fullstack engineer based in <em className="font-serif text-brand-ink">Montréal</em>. I
-            build production web and mobile apps, with a focus on real-time, AI-driven interfaces.
-          </p>
-        </div>
-      </div>
-
-      <HeroFoot contact={contact} />
+      </Container>
     </section>
   );
 }

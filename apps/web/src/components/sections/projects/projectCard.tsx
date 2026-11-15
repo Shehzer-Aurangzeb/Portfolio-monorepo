@@ -1,173 +1,36 @@
-'use client';
+import { padIndex } from '@/lib/padIndex';
+import { splitTitle } from '@/lib/splitTitle';
+import type { Project } from '@/sanity/types';
 
-import { useState } from 'react';
-import Image from 'next/image';
-import type { Project as SanityProject } from '@/sanity/types';
-import { urlFor } from '@/sanity/image';
+import ProjectInfo from '@/components/sections/projects/projectInfo';
+import ProjectMedia from '@/components/sections/projects/projectMedia';
 
-type ProjectCardProps = {
-  project: SanityProject;
+export type ProjectCardProps = {
+  project: Project;
   index: number;
 };
 
-function ImageBackdrop({ lqip }: { lqip: string | null }) {
-  if (!lqip) return null;
-
-  return (
-    <div aria-hidden className="absolute inset-0 overflow-hidden">
-      <div
-        className="absolute -inset-[10%] bg-cover bg-center blur-2xl scale-110 opacity-95"
-        style={{ backgroundImage: `url(${lqip})` }}
-      />
-      <div className="absolute inset-0 bg-linear-to-b from-bg/15 via-transparent to-bg/20" />
-    </div>
-  );
-}
-
 export default function ProjectCard({ project, index }: ProjectCardProps) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const projectNumber = String(index + 1).padStart(2, '0');
-
-  const totalSlides =
-    project.imageLayout === 'carousel'
-      ? project.images.length
-      : Math.ceil(project.images.length / 3);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
-  };
+  const { title, subtitle } = splitTitle(project.title);
 
   return (
-    <article>
-      <div className="mb-[14px]">
-        {project.imageLayout === 'carousel' ? (
-          <div className="relative border border-border">
-            <div className="overflow-hidden">
-              <div
-                className="flex transition-transform duration-350 ease-in-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
-                {project.images.map((img, i) => (
-                  <div key={i} className="flex-[0_0_100%] relative overflow-hidden bg-[#1E1D1B]">
-                    <ImageBackdrop lqip={img.lqip} />
-                    <Image
-                      src={urlFor(img.src).width(1760).quality(90).url()}
-                      alt={img.alt || `${project.title} screenshot ${i + 1}`}
-                      width={img.width ?? 1760}
-                      height={img.height ?? 990}
-                      className="relative w-full h-auto"
-                      unoptimized
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-            {project.images.length > 1 && (
-              <div className="absolute bottom-0 right-0 flex items-stretch bg-bg/[0.88] border-t border-l border-border">
-                <span className="flex items-center px-3 font-mono text-[11.5px] text-text-muted">
-                  {currentSlide + 1} / {totalSlides}
-                </span>
-                <button
-                  onClick={prevSlide}
-                  className="w-[34px] h-[30px] bg-transparent border-0 border-l border-border text-text-secondary text-[13px] cursor-pointer hover:bg-border/10"
-                  aria-label="Previous image"
-                >
-                  ←
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="w-[34px] h-[30px] bg-transparent border-0 border-l border-border text-text-secondary text-[13px] cursor-pointer hover:bg-border/10"
-                  aria-label="Next image"
-                >
-                  →
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="relative">
-            <div className="overflow-hidden">
-              <div
-                className="flex transition-transform duration-350 ease-in-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
-                {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-                  <div
-                    key={slideIndex}
-                    className="flex-[0_0_100%] grid grid-cols-3 items-start gap-[10px] p-px"
-                  >
-                    {project.images.slice(slideIndex * 3, slideIndex * 3 + 3).map((img, i) => (
-                      <div
-                        key={i}
-                        className="relative overflow-hidden bg-[#1E1D1B] border border-border"
-                      >
-                        <ImageBackdrop lqip={img.lqip} />
-                        <Image
-                          src={urlFor(img.src).width(560).quality(90).url()}
-                          alt={img.alt || `${project.title} screenshot ${slideIndex * 3 + i + 1}`}
-                          width={img.width ?? 560}
-                          height={img.height ?? 1120}
-                          className="relative w-full h-auto"
-                          unoptimized
-                        />
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-            {totalSlides > 1 && (
-              <div className="absolute bottom-0 right-0 flex items-stretch bg-bg/[0.88] border-t border-l border-border">
-                <span className="flex items-center px-3 font-mono text-[11.5px] text-text-muted">
-                  {currentSlide + 1} / {totalSlides}
-                </span>
-                <button
-                  onClick={prevSlide}
-                  className="w-[34px] h-[30px] bg-transparent border-0 border-l border-border text-text-secondary text-[13px] cursor-pointer hover:bg-border/10"
-                  aria-label="Previous slide"
-                >
-                  ←
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="w-[34px] h-[30px] bg-transparent border-0 border-l border-border text-text-secondary text-[13px] cursor-pointer hover:bg-border/10"
-                  aria-label="Next slide"
-                >
-                  →
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+    <article id={`project-${project.id}`} className="reveal">
+      <ProjectMedia project={project} />
 
-      <div className="flex items-baseline justify-between gap-5 mb-[6px]">
-        <h3 className="m-0 text-[17px] font-medium leading-[1.3] text-text-primary">
-          {projectNumber} &nbsp;{project.title}
+      <header className="flex items-baseline justify-between gap-5 mt-5 mb-1">
+        <h3 className="text-[19px] font-medium leading-tight text-text-primary">
+          <span className="font-mono text-[13px] text-text-dim mr-2.5 tabular-nums">
+            {padIndex(index)}
+          </span>
+          {title}
         </h3>
-        <span className="font-mono text-[12px] text-text-dim flex-none">
-          {project.role} · {project.year}
-        </span>
-      </div>
+        <span className="font-mono text-[12px] text-text-dim flex-none">{project.year}</span>
+      </header>
+      <p className="font-mono text-[12px] text-text-dim mb-4">
+        {[subtitle, project.category, project.role].filter(Boolean).join(' · ')}
+      </p>
 
-      <p className="m-0 mb-[10px] text-[14px] leading-[1.65] text-[#BCBAB4]">{project.body}</p>
-
-      <div className="font-mono text-[12.5px] text-text-dim">{project.stack.join(', ')}</div>
-
-      {project.url && project.href && (
-        <a
-          href={project.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block mt-3 font-mono text-[12.5px] text-text-primary border-b border-text-primary/30 pb-0.5 hover:border-text-primary transition-colors"
-        >
-          {project.url}
-        </a>
-      )}
+      <ProjectInfo project={project} />
     </article>
   );
 }

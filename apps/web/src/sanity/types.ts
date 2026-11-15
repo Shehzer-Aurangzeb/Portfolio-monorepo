@@ -24,43 +24,6 @@ export type Project = {
   images: ProjectImage[];
 };
 
-export type About = {
-  id: 'about';
-  n: string;
-  title: string;
-  category: string;
-  year: string;
-  body: string;
-  body2: string;
-  stack: string[];
-  tooling: string[];
-};
-
-export type Contact = {
-  email: string;
-  phone: string | null;
-  github: string | null;
-  githubLabel: string | null;
-  githubHandle: string | null;
-  linkedin: string | null;
-  linkedinLabel: string | null;
-  linkedinHandle: string | null;
-  location: string | null;
-  availability: string | null;
-};
-
-export type IndexItem = Project | About;
-
-export type SiteData = {
-  projects: Project[];
-  about: About | null;
-  contact: Contact | null;
-};
-
-export function isAbout(item: IndexItem): item is About {
-  return item.id === 'about';
-}
-
 export type Skill = {
   name: string;
   icon: string | null;
