@@ -39,7 +39,7 @@ export const hero = {
   availability: 'Montreal or remote',
   headline:
     'I build products end to end and ship them: web and mobile front-ends, the backends behind them, and the release pipelines that put them in front of real users.',
-  bio: 'Front-end lead at a VC-backed wealth management platform, shipping a consumer app from scratch. Before that, I built a hospital management system end-to-end solo and put two apps on the App Store and Play Store myself. 3.5 years of React, TypeScript, and getting things live. M.S. Applied Computer Science, Concordia 2025.',
+  bio: 'Most recently I built MyHealthClinic, a multi-tenant clinic SaaS, and before that I shipped Stanley Paden’s app to the App Store and Play Store, from the React Native UI to the release pipeline. 3.5 years of React, TypeScript, and getting things live. M.S. Applied Computer Science, Concordia 2025.',
 };
 
 export const work = {
